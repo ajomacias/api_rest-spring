@@ -1,0 +1,14 @@
+#####
+GET http://localhost:4444/api/publicaciones
+lol: pruebaHeader
+
+#####
+POST http://localhost:4444/api/publicaciones/crearPublicacion
+Content-Type: application/json
+
+{
+    "id":"",
+    "titulo":"Prueba Ander2",
+    "descripcion":"metodo post",
+    "contenido":"Esta inserccion es de prueba para probar si todo va correcto con mi api rest2 :)"
+}
