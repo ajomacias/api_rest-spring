@@ -12,7 +12,7 @@ public class ResourceNotFound extends RuntimeException{
     private Long valorDelCampo;
 
     public ResourceNotFound(Long id,String nombreDelCampo,String nombreRecurso){
-        super(String.format("%s no encontrado con : %s : %s", nombreRecurso,nombreDelCampo,id));
+        super(String.format("%s no encontrada con : %s : %s", nombreRecurso,nombreDelCampo,id));
         this.nombreDelCampo = nombreDelCampo;
         this.nombreDelRecurso = nombreRecurso;
         this.valorDelCampo = id;
@@ -41,8 +41,4 @@ public class ResourceNotFound extends RuntimeException{
     public void setValorDelCampo(Long valorDelCampo) {
         this.valorDelCampo = valorDelCampo;
     }
-
-
-
-    
 }

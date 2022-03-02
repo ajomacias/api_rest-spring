@@ -3,12 +3,28 @@ GET http://localhost:4444/api/publicaciones
 lol: pruebaHeader
 
 #####
+GET http://localhost:4444/api/publicaciones/1
+
+######
+PUT http://localhost:4444/api/publicaciones/1
+Content-Type: application/json
+
+{
+    "titulo":"Prueba Anderedit",
+    "descripcion":"metodo post",
+    "contenido":"Esta inserccion es de prueba para probar si todo va correcto con mi api rest2 :)"
+}
+
+
+######
 POST http://localhost:4444/api/publicaciones/crearPublicacion
 Content-Type: application/json
 
 {
-    "id":"",
     "titulo":"Prueba Ander2",
     "descripcion":"metodo post",
     "contenido":"Esta inserccion es de prueba para probar si todo va correcto con mi api rest2 :)"
 }
+######
+DELETE  http://localhost:4444/api/publicaciones/6
+Content-Type: application/json

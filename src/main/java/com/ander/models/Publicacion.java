@@ -4,11 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "publicaciones",schema="blogzada",uniqueConstraints={
-    @UniqueConstraint(columnNames={
-        "titulo",
-        "contenido"
-    })
-
+    @UniqueConstraint(columnNames={"titulo"}),
+    @UniqueConstraint(columnNames = {"contenido"}) 
 })
 public class Publicacion {
     @Id
