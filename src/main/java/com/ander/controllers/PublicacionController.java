@@ -4,8 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ander.services.PublicacionServiceImp;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.ander.Dto.PublicacionDto;
-
-import java.util.List;
+import com.ander.Dto.PublicacionRespuesta;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PublicacionController {
     @Autowired PublicacionServiceImp publicacionServiceImp;
 
-    @GetMapping("")
-    public List<PublicacionDto> obtenerPublicaciones()
+    @GetMapping
+    public ResponseEntity<PublicacionRespuesta> obtenerPublicaciones(
+    @RequestParam(value = "pagesNo" , defaultValue = "0", required = false) int numeroPa,
+    @RequestParam(value = "pageSize",defaultValue = "10",required = false) int medidaPagina )
     {
         
-        return publicacionServiceImp.obtenerPublicaciones();
+        return new ResponseEntity<>(publicacionServiceImp.obtenerPublicaciones(numeroPa,medidaPagina),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

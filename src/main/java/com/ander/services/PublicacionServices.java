@@ -1,15 +1,15 @@
 package com.ander.services;
 
 import com.ander.Dto.PublicacionDto;
+import com.ander.Dto.PublicacionRespuesta;
 
-import java.util.List;
 
 public interface PublicacionServices {
     public PublicacionDto crearPublicacion(PublicacionDto PublicacionDto);
 
     public PublicacionDto editarPublicacion(Long id,PublicacionDto publicacionDto);
 
-    public List<PublicacionDto> obtenerPublicaciones();
+    public PublicacionRespuesta obtenerPublicaciones(int numeroPag, int medidaPagina);
 
     public PublicacionDto obtenerPublicacionPorId(Long id);
 

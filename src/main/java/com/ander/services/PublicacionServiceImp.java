@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ander.Dto.PublicacionDto;
+import com.ander.Dto.PublicacionRespuesta;
 import com.ander.excepciones.ResourceNotFound;
 import com.ander.excepciones.ResourceVioledConstraint;
 import com.ander.models.Publicacion;
@@ -13,6 +14,7 @@ import com.ander.repository.PublicacionesRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.*;
 
 @Service
 public class PublicacionServiceImp implements PublicacionServices{
@@ -20,20 +22,44 @@ public class PublicacionServiceImp implements PublicacionServices{
     @Autowired PublicacionesRepository publicacionRepository;
 
     @Override
+    public PublicacionRespuesta obtenerPublicaciones(int numeroPag,int medidaPagina) 
+    {
+        Pageable pageable = PageRequest.of(numeroPag,medidaPagina);
+        Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
+        
+        List<Publicacion> listaPublicaciones = publicaciones.getContent();
+        List<PublicacionDto> listaDto = listaPublicaciones.stream().map(publicacion->mapearDto(publicacion)).collect(Collectors.toList());
+        PublicacionRespuesta publicacionRespuesta = new PublicacionRespuesta();
+        publicacionRespuesta.setContenido(listaDto);
+        publicacionRespuesta.setNumeroPagina(publicaciones.getNumber());
+        publicacionRespuesta.setMedidaagina(publicaciones.getSize());
+        publicacionRespuesta.setTotalElementos(publicaciones.getTotalElements());
+        publicacionRespuesta.setUltima(publicaciones.isLast());
+
+        return publicacionRespuesta;
+    }
+    @Override
+    public PublicacionDto obtenerPublicacionPorId(Long id)
+    {
+        Publicacion publicacion = publicacionRepository.findById(id).orElseThrow(()->new ResourceNotFound(id, "id", "publicacion"));
+        return mapearDto(publicacion);
+    }
+
+    @Override
     public PublicacionDto crearPublicacion(PublicacionDto publicacionDto){
         //Convertimos Dto a entidad
         Publicacion publicacion = mapearPublicacion(publicacionDto);
-        Publicacion nuevaPublicacion = null;
         try{
-        publicacionRepository.save(publicacion);
+        publicacion = publicacionRepository.save(publicacion);
+
         }catch(DataIntegrityViolationException err){
             throw new ResourceVioledConstraint("publicacion", "unique",
             publicacionDto.getContenido(),publicacionDto.getTitulo());
         }
 
         //Covertimos de entidad a DTO
-
-        return mapearDto(nuevaPublicacion);
+        return mapearDto(publicacion);
+        
     }
     @Override
     public PublicacionDto editarPublicacion(Long id,PublicacionDto publicacionDto)
@@ -56,18 +82,6 @@ public class PublicacionServiceImp implements PublicacionServices{
 
        publicacionRepository.delete(publicacion);
 
-    }
-    @Override
-    public List<PublicacionDto> obtenerPublicaciones() 
-    {
-        List<Publicacion> publicaciones = publicacionRepository.findAll();
-        return publicaciones.stream().map(publicacion->mapearDto(publicacion)).collect(Collectors.toList());
-    }
-    @Override
-    public PublicacionDto obtenerPublicacionPorId(Long id)
-    {
-        Publicacion publicacion = publicacionRepository.findById(id).orElseThrow(()->new ResourceNotFound(id, "id", "publicacion"));
-        return mapearDto(publicacion);
     }
 
     private PublicacionDto mapearDto(Publicacion publicacion)

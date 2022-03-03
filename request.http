@@ -1,5 +1,5 @@
 #####
-GET http://localhost:4444/api/publicaciones
+GET http://localhost:4444/api/publicaciones?pagesNo=1&pageSize=10
 lol: pruebaHeader
 
 #####
@@ -21,9 +21,9 @@ POST http://localhost:4444/api/publicaciones/crearPublicacion
 Content-Type: application/json
 
 {
-    "titulo":"Prueba Ander2",
+    "titulo":"Prueba Ander32",
     "descripcion":"metodo post",
-    "contenido":"Esta inserccion es de prueba para probar si todo va correcto con mi api rest2 :)"
+    "contenido":"hola me llamo ander soza"
 }
 ######
 DELETE  http://localhost:4444/api/publicaciones/6

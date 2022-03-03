@@ -40,7 +40,5 @@ public class PublicacionDto {
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
-
-    
     
 }
