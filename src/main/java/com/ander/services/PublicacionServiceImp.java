@@ -16,15 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.*;
 
-@Service
+@Service 
 public class PublicacionServiceImp implements PublicacionServices{
 
-    @Autowired PublicacionesRepository publicacionRepository;
+    @Autowired 
+    private PublicacionesRepository publicacionRepository;
 
     @Override
-    public PublicacionRespuesta obtenerPublicaciones(int numeroPag,int medidaPagina) 
+    public PublicacionRespuesta obtenerPublicaciones(int numeroPag,int medidaPagina, String ordenarPor,String sortDir) 
     {
-        Pageable pageable = PageRequest.of(numeroPag,medidaPagina);
+        System.out.println(Sort.Direction.ASC.name());
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(ordenarPor).ascending():Sort.by(ordenarPor).descending();
+        Pageable pageable = PageRequest.of(numeroPag,medidaPagina,sort);
         Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
         
         List<Publicacion> listaPublicaciones = publicaciones.getContent();
@@ -32,9 +35,10 @@ public class PublicacionServiceImp implements PublicacionServices{
         PublicacionRespuesta publicacionRespuesta = new PublicacionRespuesta();
         publicacionRespuesta.setContenido(listaDto);
         publicacionRespuesta.setNumeroPagina(publicaciones.getNumber());
-        publicacionRespuesta.setMedidaagina(publicaciones.getSize());
+        publicacionRespuesta.setMedidagina(publicaciones.getSize());
         publicacionRespuesta.setTotalElementos(publicaciones.getTotalElements());
         publicacionRespuesta.setUltima(publicaciones.isLast());
+        publicacionRespuesta.setTotalPaginas(publicaciones.getTotalPages());
 
         return publicacionRespuesta;
     }

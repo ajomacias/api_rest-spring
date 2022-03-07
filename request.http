@@ -1,6 +1,5 @@
 #####
-GET http://localhost:4444/api/publicaciones?pagesNo=1&pageSize=10
-lol: pruebaHeader
+GET http://localhost:4444/api/publicaciones?pagesNo=1&pageSize=10&sortBy=nombre&sortDir=asc
 
 #####
 GET http://localhost:4444/api/publicaciones/1
@@ -28,3 +27,20 @@ Content-Type: application/json
 ######
 DELETE  http://localhost:4444/api/publicaciones/6
 Content-Type: application/json
+
+#######
+GET http://localhost:4444/api/publicaciones/27/comentarios
+Content-Type: application/json
+
+#######
+GET http://localhost:4444/api/publicaciones/28/comentarios/2
+Content-Type: application/json
+#######
+POST http://localhost:4444/api/publicaciones/2/comentarios
+Content-Type: application/json
+
+{
+    "nombre":"comentario excelente",
+    "email":"anderk222@gmail.com",
+    "cuerpo":"muy buen tutorial"
+}

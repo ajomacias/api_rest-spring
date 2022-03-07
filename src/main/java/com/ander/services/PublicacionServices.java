@@ -9,7 +9,7 @@ public interface PublicacionServices {
 
     public PublicacionDto editarPublicacion(Long id,PublicacionDto publicacionDto);
 
-    public PublicacionRespuesta obtenerPublicaciones(int numeroPag, int medidaPagina);
+    public PublicacionRespuesta obtenerPublicaciones(int numeroPag, int medidaPagina, String ordenarPor,String sortDir);
 
     public PublicacionDto obtenerPublicacionPorId(Long id);
 

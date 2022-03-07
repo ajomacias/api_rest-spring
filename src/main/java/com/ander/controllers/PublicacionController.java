@@ -5,6 +5,7 @@ import com.ander.services.PublicacionServiceImp;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.ander.Dto.PublicacionDto;
 import com.ander.Dto.PublicacionRespuesta;
+import com.ander.utils.AppConstantes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,14 @@ public class PublicacionController {
 
     @GetMapping
     public ResponseEntity<PublicacionRespuesta> obtenerPublicaciones(
-    @RequestParam(value = "pagesNo" , defaultValue = "0", required = false) int numeroPa,
-    @RequestParam(value = "pageSize",defaultValue = "10",required = false) int medidaPagina )
+    @RequestParam(value = "pagesNo" , defaultValue = AppConstantes.NUMERO_PAGINA_DF, required = false) int numeroPa,
+    @RequestParam(value = "pageSize", defaultValue = AppConstantes.TAMAÑO_PAGINAS_DF,required = false) int medidaPagina,
+    @RequestParam(value = "sortBy", defaultValue=AppConstantes.ORDEN_CAMPO_DF, required = false ) String ordenarPor,
+    @RequestParam(value = "sortDir", defaultValue=AppConstantes.ORDEN_PAGINAS_DF,required = false) String sortDir
+    )
     {
         
-        return new ResponseEntity<>(publicacionServiceImp.obtenerPublicaciones(numeroPa,medidaPagina),HttpStatus.OK);
+        return new ResponseEntity<>(publicacionServiceImp.obtenerPublicaciones(numeroPa,medidaPagina,ordenarPor,sortDir),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

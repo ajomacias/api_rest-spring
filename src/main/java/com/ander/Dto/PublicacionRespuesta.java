@@ -1,14 +1,14 @@
 package com.ander.Dto;
 
-import com.ander.Dto.PublicacionDto;
-
 import java.util.List;
 
 public class PublicacionRespuesta {
     private List<PublicacionDto> contenido;
-    private Long totalElementos;
+    
     private int numeroPagina;
-    private int medidaagina;
+    private int medidagina;
+    private Long totalElementos;
+    private int totalPaginas;
     private boolean ultima;
     public List<PublicacionDto> getContenido() {
         return contenido;
@@ -28,14 +28,20 @@ public class PublicacionRespuesta {
     public void setNumeroPagina(int numeroPagina) {
         this.numeroPagina = numeroPagina;
     }
-    public int getMedidaagina() {
-        return medidaagina;
+    public int getMedidagina() {
+        return medidagina;
     }
-    public void setMedidaagina(int medidaagina) {
-        this.medidaagina = medidaagina;
+    public void setMedidagina(int medidaagina) {
+        this.medidagina = medidaagina;
     }
     public boolean isUltima() {
         return ultima;
+    }
+    public int getTotalPaginas() {
+        return totalPaginas;
+    }
+    public void setTotalPaginas(int totalPaginas) {
+        this.totalPaginas = totalPaginas;
     }
     public void setUltima(boolean ultima) {
         this.ultima = ultima;

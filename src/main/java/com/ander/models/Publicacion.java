@@ -1,5 +1,9 @@
 package com.ander.models;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
+import org.hibernate.annotations.SQLDelete;
 
 
 @Entity
@@ -7,7 +11,9 @@ import javax.persistence.*;
     @UniqueConstraint(columnNames={"titulo"}),
     @UniqueConstraint(columnNames = {"contenido"}) 
 })
+
 public class Publicacion {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +24,8 @@ public class Publicacion {
     private String descripcion;
     @Column(name="contenido",nullable=false)
     private String contenido;
+    @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comentario> comentarios = new HashSet<>();
     
     public Long getId() {
         return id;
